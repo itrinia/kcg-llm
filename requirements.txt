@@ -1,0 +1,29 @@
+# Core packages for AI/ML development
+torch>=2.0.0
+transformers>=4.30.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Ollama integration
+ollama>=0.5.0
+
+# HTTP requests and API handling
+requests>=2.31.0
+httpx>=0.24.0
+
+# Jupyter for development and testing
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Additional useful packages
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+typing-extensions>=4.5.0
+
+# Optional: For web interface
+streamlit>=1.28.0
+gradio>=3.50.0
+
+# Optional: For data visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0 
