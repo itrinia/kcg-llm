@@ -7,20 +7,6 @@ from langchain_community.utilities import SQLDatabase
 from langchain.prompts import PromptTemplate
 import re
 
-# def setup_database():
-#     try:
-#         df = pd.read_csv("Sheet1-1-Retail_Dataset2.csv")
-#         conn = sqlite3.connect("retail_sales.db")
-#         df.to_sql("sales", conn, if_exists="replace", index=False)
-#         conn.close()
-#         print("✓ Database loaded successfully!")
-#         return True
-#     except FileNotFoundError:
-#         print("✗ Error: Sheet1-1-Retail_Dataset2.csv not found!")
-#         return False
-#     except Exception as e:
-#         print(f"✗ Error loading database: {e}")
-#         return False
 
 def create_agent():
     try:
@@ -65,9 +51,7 @@ def main():
     print("Type 'q' to end the session")
     print("=" * 60)
     
-    # # Setup database
-    # if not setup_database():
-    #     return
+
     
     # Create agent
     agent = create_agent()
