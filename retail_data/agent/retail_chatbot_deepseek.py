@@ -10,8 +10,8 @@ import re
 
 def create_agent():
     try:
-        llm = OllamaLLM(model="deepseek-r1:1.5b")
-        db = SQLDatabase.from_uri("sqlite:///retail_sales.db")
+        llm = OllamaLLM(model="deepseek-r1:1.5b", streaming=True)
+        db = SQLDatabase.from_uri("sqlite:////Users/ileene/Library/CloudStorage/OneDrive-UniversitasCiputra/kcg/kcg-llm/retail_data/dataset/retail_sales.db")
         toolkit = SQLDatabaseToolkit(db=db, llm=llm)
         
         prompt = PromptTemplate(
@@ -73,12 +73,37 @@ def main():
             if not user_input:
                 continue
             
+            # Handle greetings and non-SQL input
+            if user_input.lower() in ['hi', 'hello', 'hey']:
+                print("\nBot: Hello! Please ask a question about the retail sales data.")
+                continue
+
+            # Handle help/columns command
+            if user_input.lower() in ['help', 'columns']:
+                print("\nBot: Retail Dataset Columns and Descriptions:")
+                print("- Product_id: Unique identifier for each product")
+                print("- Product_Code: Code for the product")
+                print("- Warehouse: Warehouse location")
+                print("- Product_Category: Category of the product")
+                print("- Date: Date of the record")
+                print("- Order_Demand: Number of orders/demand for the product")
+                print("- Open: Whether the store/warehouse was open (likely 1/0)")
+                print("- Promo: Whether a promotion was active (likely 1/0)")
+                print("- StateHoliday: Whether it was a state holiday (likely 1/0 or a string)")
+                print("- SchoolHoliday: Whether it was a school holiday (likely 1/0)")
+                print("- Petrol_price: Price of petrol on that date")
+                continue
+
             # Get response from agent
             print("\nBot: Thinking...")
-            response = agent.invoke({"input": user_input})
-            
-            # Display response
-            output = response['output']
+            output = ""
+            for chunk in agent.stream({"input": user_input}):
+                text = chunk.get('output', '')
+                print(text, end='', flush=True)
+                output += text
+            print()  # Newline after streaming
+
+            # Post-process to extract the answer
             match = re.search(r'\d+', output)
             if match:
                 print(f"\nBot: {match.group(0)}")
