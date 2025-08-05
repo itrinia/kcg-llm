@@ -11,7 +11,7 @@ import re
 def create_agent():
     try:
         llm = OllamaLLM(model="mistral")
-        db = SQLDatabase.from_uri("sqlite:///retail_sales.db")
+        db = SQLDatabase.from_uri("sqlite://///Users/ileene/Library/CloudStorage/OneDrive-UniversitasCiputra/kcg/kcg-llm/retail_data/agent/retail_sales.db")
         toolkit = SQLDatabaseToolkit(db=db, llm=llm)
         
         prompt = PromptTemplate(
